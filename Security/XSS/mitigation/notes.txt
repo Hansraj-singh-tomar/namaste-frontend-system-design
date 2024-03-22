@@ -1,0 +1,45 @@
+- List of all possible way to take user input
+
+- Replace : innerHTML > innerText || textContent
+    (bcz when you put as an inner text, then it gets an an syntax, like a text string that will be printed)
+    (It won't be a js code and it won't be executed as a DOM element, it's is going to be printed as a normal strength)
+
+- Escaping - escape all the user input 
+    const params = new URLSearchParams(window.location.search);
+    const name = params.get('name');
+    const sanitizedName = name.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    document.getElementById("username").textContent = sanitizedName;
+
+- Using Library like React
+    Exp - 
+    import React from 'react';
+    function Greeting(){
+        const params = new URLSearchParams(window.location.search);
+        const name = params.get('name');
+        return(
+            <div>
+                Welcome, {name}! // this code is not going to execute // here name consider as a text only instead of a dom element
+            </div>
+        )
+    }
+
+- In react avoid using those syntax where you are dangerously injecting the HTML into your dom
+
+- Sanatize your data using DOMPurify Library
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.3.3/purify.min.js"></script>
+    <div>
+        Wlcome, <span id="username"></span>!
+    </div>
+
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const name = params.get('name');
+        const sanitizedName = DOMPurify.sanitize(name);
+        document.getElementById("username").textContent = sanitizedName;
+    </script>
+
+- CSP headers - so there are many headers that can be set from the CSP headers, 
+                from the server into your application which decide what kind of the resources can be 
+                loaded from where these resources can be loaded and taking control do you want it to execute it.    
+
+                CSP - 1. Allow-sources, 2. Script Nouces, 3. Report Only Mode
